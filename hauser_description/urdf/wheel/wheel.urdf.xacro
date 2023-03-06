@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">	
+	<xacro:macro name="wheel" params="prefix parent *joint_origin *joint_axis">
+		<joint name="${prefix}_wheel_joint" type="continuous">
+			<xacro:insert_block name="joint_origin"/>
+			<xacro:insert_block name="joint_axis"/>
+			<parent link="${parent}"/>
+			<child link="${prefix}_wheel_link"/>
+		</joint>
+
+		<link name="${prefix}_wheel_link">
+			   <visual>
+					<geometry>
+					<mesh filename="package://hauser_description/meshes/wheel.dae"/>
+					</geometry>
+				</visual>
+
+			<collision>
+				<geometry>
+					<cylinder radius="0.13" length="0.12"/>
+				</geometry>
+			</collision>
+
+			<inertial>
+				<origin xyz="0 0 0"/>
+				<mass value="2.637"/>
+				<xacro:cylinder_inertia m="2.637" r="0.13" h="0.12"/>
+			</inertial>
+		</link>
+	</xacro:macro>
+</robot>

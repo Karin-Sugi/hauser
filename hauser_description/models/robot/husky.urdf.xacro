@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<robot name="hauser" xmlns:xacro="http://ros.org/wiki/xacro">
+  	<xacro:include filename="$(find hauser_description)/urdf/common.urdf.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/chassis/chassis.urdf.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/wheel/wheel.urdf.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/wheel/wheel.gazebo.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/wheel/wheel.transmission.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/sensors/imu.urdf.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/sensors/imu.gazebo.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/sensors/realsense.urdf.xacro"/>
+	<xacro:include filename="$(find hauser_description)/urdf/sensors/realsense.gazebo.xacro"/>
+	
+
+	<link name="base_footprint"/>
+	<xacro:chassis parent="base_footprint">
+		<origin xyz="0 0 0"/>
+	</xacro:chassis>
+
+	<xacro:imu parent="chassis_link" />
+
+	<xacro:realsense parent="chassis_link" dp_xyz="0 0 0.5" />
+
+	<xacro:wheel prefix="front_right" parent="base_footprint">
+		<origin xyz="0.25 -0.28 0.0" rpy="0 0 0"/>
+		<axis xyz="0 1 0"/>
+	</xacro:wheel>
+
+	<xacro:wheel prefix="front_left" parent="base_footprint">
+		<origin xyz="0.25 0.28 0.0" rpy="0 0 0"/>
+		<axis xyz="0 1 0"/>
+	</xacro:wheel>
+
+	<xacro:wheel prefix="rear_right" parent="base_footprint">
+		<origin xyz="-0.25 -0.28 0.0" rpy="0 0 0"/>
+		<axis xyz="0 1 0"/>
+	</xacro:wheel>
+
+	<xacro:wheel prefix="rear_left" parent="base_footprint">
+		<origin xyz="-0.25 0.28 0.0" rpy="0 0 0"/>
+		<axis xyz="0 1 0"/>
+	</xacro:wheel>
+
+	<!--============= Gazebo =============-->
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/</robotNamespace>
+			<legacyModeNS>true</legacyModeNS>
+		</plugin>
+	</gazebo>
+
+	<xacro:imu_gazebo />
+	<xacro:realsense_gazebo />
+
+	<xacro:wheel_gazebo prefix="front_right"/>
+	<xacro:wheel_gazebo prefix="front_left"/>
+	<xacro:wheel_gazebo prefix="rear_right"/>
+	<xacro:wheel_gazebo prefix="rear_left"/>
+
+	<!--========== Transmission ==========-->>
+	<xacro:wheel_transmission prefix="front_right"/>
+	<xacro:wheel_transmission prefix="front_left"/>
+	<xacro:wheel_transmission prefix="rear_right"/>
+	<xacro:wheel_transmission prefix="rear_left"/>
+
+</robot>

@@ -1,0 +1,12 @@
+<launch>
+    <!-- Load rviz description -->
+    <include file="$(find hauser_viz)/launch/rviz/rviz_for_gazebo.launch" >
+    </include>
+
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+
+    <include file="$(find realsense2_camera)/launch/rs_camera.launch" >
+        <arg name="filters" value="pointcloud" />
+    </include>
+
+</launch>

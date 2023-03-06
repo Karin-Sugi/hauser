@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <!-- A global light source -->
+    <include>
+      <uri>model://ground_plane</uri>
+      <pose>0 0 -5.0 0 0 0</pose>
+    </include>
+    <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- DEM of moon surface -->
+    <include>
+      <name>moon_surface</name>
+      <uri>model://apollo15_landing_site_1000x1000</uri>
+      <pose>0 0 2.0 0 0 0</pose>
+    </include>
+    <!-- Own physics settings to speed up simulation -->
+    <physics type='ode'>
+      <max_step_size>0.01</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>100</real_time_update_rate>
+    </physics>
+  </world>
+</sdf>

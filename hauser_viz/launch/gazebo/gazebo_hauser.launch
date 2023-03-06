@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<launch>
+<!-- 
+  <arg name="multimaster" default="$(optenv ROBOT_MULTIMASTER false)"/>
+  <arg name="simulation" default="$(optenv ROBOT_SIMULATION false)"/>
+  <arg name="robot_namespace" default="$(optenv ROBOT_NAMESPACE robot)"/>
+  <arg name="enable_ekf" default="$(optenv ENABLE_EKF true)"/>
+
+  <arg name="config_extras"
+       default="$(eval optenv('hauser_CONFIG_EXTRAS', find('hauser_control') + '/config/empty.yaml'))"/>
+
+  <include file="$(find multimaster_launch)/launch/multimaster_robot.launch" if="$(arg multimaster)">
+    <arg name="gazebo_interface" value="$(find hauser_control)/config/gazebo_interface.yaml" />
+    <arg name="public_interface" value="$(find hauser_control)/config/public_interface.yaml" />
+    <arg name="robot_namespace" value="$(arg robot_namespace)"/>
+    <arg name="simulation" value="$(arg simulation)"/>
+  </include> 
+  -->
+
+  <!-- Load rviz description -->
+  <include file="$(find hauser_viz)/launch/rviz/rviz_for_gazebo.launch" >
+  </include>
+
+  <!-- Show robot model in gazebo world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find hauser_viz)/worlds/moon.world" />
+  </include>
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model hauser" />
+
+  <!-- Load controller configuration -->
+  <rosparam command="load" file="$(find hauser_viz)/launch/config/yaml/control.yaml" />
+
+  <!-- Spawn controllers (create husky_joint_publisher/husky_velocity_controller topic) -->
+  <node name="base_controller_spawner" pkg="controller_manager" type="spawner"
+        args="husky_joint_publisher husky_velocity_controller" />
+  <!-- <rosparam param="wheel_radius_multiplier" ns="hauser_velocity_controller" subst_value="True">
+        $(optenv hauser_WHEEL_MULTIPLIER 1.0)
+  </rosparam> -->
+<!-- 
+  Start EKF for localization
+  <group if="$(arg enable_ekf)" >
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+      <rosparam command="load" file="$(find hauser_control)/config/localization.yaml" />
+    </node>
+  </group>
+
+  <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server" output="screen">
+    <param name="link_name" value="base_link" />
+  </node> -->
+
+  <!-- Change joint_state published from gazebo into /tf, which rviz can understand -->
+  <!-- <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /> -->
+
+  <!-- <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+    <rosparam command="load" file="$(find hauser_control)/config/twist_mux.yaml" />
+    <remap from="cmd_vel_out" to="hauser_velocity_controller/cmd_vel"/>
+  </node>
+
+  Override the default control parameters, see config/empty.yaml for default.
+  <rosparam command="load" file="$(arg config_extras)" subst_value="true" /> -->
+
+</launch>

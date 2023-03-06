@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:property name="size" value="0.544 0.42 0.26" />
+  	
+	<xacro:macro name="chassis" params="parent *joint_origin">
+		<joint name="chassis_joint" type="fixed">
+			<xacro:insert_block name="joint_origin"/>
+			<parent link="${parent}"/>
+			<child link="chassis_link"/>
+		</joint>
+
+		<link name="chassis_link">
+			<visual>
+				<geometry>
+					<mesh filename="package://hauser_description/meshes/chassis_base.dae"/>
+				</geometry>
+			</visual>
+
+			<collision>
+				<geometry>
+					<box size="${size}"/>
+				</geometry>
+			</collision>
+
+			<inertial>
+				<origin xyz="0 0 0"/>
+				<mass value="40"/>
+				<xacro:box_inertia m="40" x="0.544" y="0.42" z="0.26"/>
+			</inertial>
+		</link>
+		
+		<joint name="chassis_top_joint" type="fixed">
+			<parent link="chassis_link"/>
+			<child link="chassis_top_link"/>
+		</joint>
+
+		<link name="chassis_top_link">
+			   <visual>
+			   		<origin xyz="0 0 0" rpy="0 0 0"/>
+					<geometry>
+						<mesh filename="package://hauser_description/meshes/chassis_top.dae"/>
+					</geometry>
+				</visual>
+		</link>
+
+		<joint name="chassis_plate_joint" type="fixed">
+			<parent link="chassis_link"/>
+			<child link="chassis_plate_link"/>
+		</joint>
+
+		<link name="chassis_plate_link">
+			   <visual>
+			   		<origin xyz="0 0 0.23" rpy="0 0 0"/>
+					<geometry>
+						<mesh filename="package://hauser_description/meshes/top_plate.dae"/>
+					</geometry>
+				</visual>
+		</link>
+	</xacro:macro>
+</robot>

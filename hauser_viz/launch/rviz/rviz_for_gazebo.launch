@@ -1,0 +1,15 @@
+<launch>
+  <!-- arguments -->
+  <arg name="model" default="$(find hauser_description)/models/robot/robot.urdf.xacro"/>
+    
+  <!-- prameters -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+
+  <!-- nodes -->
+    <!-- Change joint_state published from gazebo into /tf, which rviz can understand-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hauser_viz)/launch/config/rviz/data_gazebo.rviz" required="true" />
+  
+</launch>

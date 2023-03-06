@@ -1,0 +1,6 @@
+[submodule "hebi_ros_pkg"]
+	path = hebi_ros_pkg
+	url = https://github.com/ishigami-lab/hebi_ros_pkg.git
+[submodule "leptrino_ros_pkg"]
+	path = leptrino_ros_pkg
+	url = https://github.com/ishigami-lab/leptrino_ros_pkg.git

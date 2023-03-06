@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+   
+    <xacro:macro name="realsense" params="parent dp_xyz">
+        
+        <xacro:arg name="use_nominal_extrinsics" default="false" />
+        <xacro:sensor_d435i parent="${parent}" use_nominal_extrinsics="true">
+            <origin xyz="${dp_xyz}" rpy="0 0 0"/>
+        </xacro:sensor_d435i>
+
+        <!-- <joint name="lens_joint" type="fixed">
+            <origin xyz="${dp_xyz}" rpy="0 0 0" />
+            <parent link="${parent}" />
+            <child link="dp_lens_link" />
+        </joint>
+
+        <link name="dp_lens_link">
+        <visual>
+            
+            the model's origin is in the middle & it's rotated to lie in
+            the optical standard with X left, Y up, and Z forward
+            
+            <origin xyz="0.0115 0 0.0100" rpy="1.570796 0 1.570796" />
+            <geometry>
+                 Origin of this mesh is the base of the bracket.
+                <mesh filename="package://realsense2_description/meshes/d415.stl" />
+            </geometry>
+            <material name="white" />
+        </visual>
+        </link>
+
+        <joint name="dp_origin_joint" type="fixed">
+            <origin xyz="0.025 0 0" rpy="0 0 0" />
+            <parent link="dp_lens_link" />
+            <child link="dp_origin_link" />
+        </joint>
+
+         this link is the origin for the camera's data 
+        <link name="dp_origin_link" />
+
+        <joint name="dp_gazebo_joint" type="fixed">
+            <parent link="dp_origin_link"/>
+            <child link="dp_gazebo_link"/>
+            <origin xyz="0.0 0 0" rpy="-1.5707963267948966 0 -1.5707963267948966"/>
+        </joint>
+        
+            The gazebo plugin aligns the depth data with the Z axis, with X=left and Y=up
+            ROS expects the depth data along the X axis, with Y=left and Z=up
+            This link only exists to give the gazebo plugin the correctly-oriented frame
+        
+        <link name="dp_gazebo_link" />
+        -->
+  </xacro:macro>
+</robot> 

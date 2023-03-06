@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+	<xacro:include filename="$(find hauser_description)/urdf/blade/blade.gazebo.xacro"/>
+	
+	<xacro:property name="size_blade" value="0.03 0.7 0.35" />
+  	
+	<xacro:macro name="blade" params="parent *joint_origin">
+		<joint name="blade_joint" type="fixed">
+			<xacro:insert_block name="joint_origin"/>
+			<parent link="${parent}"/>
+			<child link="blade_link"/>
+		</joint>
+
+		<link name="blade_link">
+			<visual>
+				<geometry>
+					<box size="${size_blade}"/>
+				</geometry>
+				<material name="black"/>
+			</visual>
+
+			<collision>
+				<geometry>
+					<box size="${size_blade}"/>
+				</geometry>
+			</collision>
+
+			<inertial>
+				<origin xyz="0 0 0"/>
+				<mass value="5"/>
+				<xacro:box_inertia m="5" x="0.03" y="0.7" z="0.35"/>
+			</inertial>
+		</link>
+		
+		<xacro:balde_gazebo />
+
+    </xacro:macro>
+</robot>

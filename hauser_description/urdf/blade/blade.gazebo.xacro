@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:macro name="balde_gazebo">
+    <gazebo reference="blade_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+  </xacro:macro>
+</robot>

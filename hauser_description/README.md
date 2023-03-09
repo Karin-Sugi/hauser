@@ -5,19 +5,15 @@ This is the urdf files of bulldozing robot: hauser based on husky
     |―― README.md
 	|―― CMakeList.txt
 	|―― package.xml
-	|―― launch
-        |―― config
-            |―― urdf.rviz
-        |―― rviz_display.launch
-        |―― gazebo_display.launch
 	|―― meshes  <--ロボットの形状や色を表現するCOLLADAファイル
 		|―― chassis_base.dae
 		|―― chassis_top.dae
 		|―― top_plate.dae
 		|―― wheel.dae
 		
-	|―― robot   <--ロボットを構成するxacroファイルをすべてまとめる
+	|―― models/robot   <--ロボットを構成するxacroファイルをすべてまとめる
         |―― robot.urdf.xacro
+		|―― husky.urdf.xacro
 	|―― urdf    <--urdfまたはxacroファイル(マクロ)
 		|―― common.xacro
 		|―― chassis
@@ -30,4 +26,7 @@ This is the urdf files of bulldozing robot: hauser based on husky
 			|―― blade.urdf.xacro
             |―― blade.gazebo.xacro
 		|―― sensors
-            |―― 
+            |―― imu.xacro.urdf
+			|―― imu.gazebo.urdf
+			|―― realsense.xacro.urdf
+			|―― realsense.gazebo.urdf

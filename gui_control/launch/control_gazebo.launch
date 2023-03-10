@@ -18,7 +18,7 @@
   -->
 
   <!-- Load rviz description -->
-  <include file="$(find gui_control)/launch/control_real.launch" >
+  <include file="$(find gui_control)/launch/gui_controller.launch" >
   </include>
 
   <!-- Show robot model in gazebo world -->
